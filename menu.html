@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú</title>
+    <style>
+    body {
+    background: linear-gradient(45deg,rgb(0, 0, 0),rgba(119, 129, 119, 0.699),rgba(184, 184, 176, 0.836),rgb(255, 255, 255));
+    background-size: 400% 400%;
+    position: relative;
+    animation: cambiar 10s ease-in-out infinite;
+        }
+    @keyframes cambiar {
+    0% {background-position: 0 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0 50%;}
+    }
+    @media only screen and (max-width: 768px) {
+    .menu-container {
+    flex-direction: column;
+    }
+    .menu-section {
+    width: 100%;
+    margin-bottom: 20px;
+    }
+    .menu-item {
+    font-size: 14px; /
+    }
+    }
+
+    .menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    }
+    .menu-section {
+    width: 45%;
+    }
+    .menu-section h2 {
+    text-align: center;
+    }
+    .menu-item {
+    margin-bottom: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-section">
+            <h1>ELIGE TU PLATANO</h1>
+            <h3>ENTRADAS:</h3>
+            <div class="menu-item">moneditas...15k</div>
+            <div class="menu-item">pataconas con hogo...15k</div>
+            <div class="menu-item">maduro con queso y bocadillo...15k</div>
+            
+            <h3>PLATOS:</h3>
+            <div class="menu-item">plataburger...20k<br>(carne de res, queso, cebolla caramelizada, tomate, lechuga, salsa)</div>
+            <div class="menu-item">plataperro...20k<br>(base de platano, salchicha, queso, papa ripio, salsa, jamon)</div>
+            <div class="menu-item">salchiplata...20k<br>(trocitos de platano maduro, salchicha, queso fundido)</div>
+            <div class="menu-item">boliplata...20k<br>(bolas de platano rellenas de queso y tocineta)</div>
+            <div class="menu-item">patacon pizzao...20k<br>(base de platano, salsa de tomate, jamon, maiz tierno, piña melada, queso)</div>
+            <div class="menu-item">plata sandwich vegetal...20k<br>(jamon, queso, vegetales salteados)</div>
+            <div class="menu-item">canastas...20k<br>(atun, cilantro, cebolla, mayonesa)</div>
+            <div class="menu-item">empaplata...20k<br>(empanadas rellena de carne ropavieja o pollo con champiñones)</div>
+        </div>
+        
+        <div class="menu-section">
+            <h2>JUGOS</h2>
+            <h3>A BASE DE LECHE:</h3>
+            <div class="menu-item">banano...11k</div>
+            <h3>JARRAS:</h3>
+            <div class="menu-item">limonada natural...13k</div>
+            <div class="menu-item">limonada de panela...13k</div>
+            <h3>A BASE DE AGUA:</h3>
+            <div class="menu-item">limonada natural...10k</div>
+            <div class="menu-item">limonada cerezada...10k</div>
+            <div class="menu-item">limonada de coco...10k</div>
+            <div class="menu-item">cerecoco...10k<br>(deliciosa mezcla de cereza y coco)</div>
+            <div class="menu-item">cholupa...10k</div>
+            <div class="menu-item">maracuya...10k</div>
+            <div class="menu-item">locura...10k<br>(deliciosa mezcla de cholupa y maracuya)</div>
+            <div class="menu-item">mandarina...10k</div>
+            <div class="menu-item">naranjada...10k</div>
+            <div class="menu-item">manjar...10k<br>(deliciosa mezcla de mandarina y naranja)</div>
+            <h3>GASEOSAS</h3>
+            <div class="menu-item">cocacola pet...5k</div>
+            <div class="menu-item">cocacola1.5...5k</div>
+            <div class="menu-item">ginger pet...5k</div>
+            <div class="menu-item">ginger1.5...5k</div>
+            <div class="menu-item">sprite pet...5k</div>
+            <div class="menu-item">sprite1.5...5k</div>
+            <div class="menu-item">Quatro pet...5k</div>
+            <div class="menu-item">Quatro1.5...5k</div>
+            <h3>CERVEZAS</h3>
+            <div class="menu-item">aguila negra...5k</div>
+            <div class="menu-item">aguila light...5k</div>
+            <div class="menu-item">costeña...5k</div>
+        </div>
+    </div>
+</body>
+</html>

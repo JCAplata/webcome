@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domicilios</title>
+    <style>
+        body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(45deg, rgb(0, 0, 0), rgba(119, 129, 119, 0.699), rgba(184, 184, 176, 0.836), rgb(255, 255, 255));
+        background-size: 400% 400%;
+        position: relative;
+        animation: cambiar 10s ease-in-out infinite;
+        }
+        @keyframes cambiar {
+            0% {background-position: 0 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0 50%;}
+        }
+        #products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        }
+
+        .product {
+        width: calc(100% - 20px);
+        margin-bottom: 20px;
+        }
+
+        .product button {
+        background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+        background-size: 400% 400%;
+        position: relative;
+        animation: cambiar 10s ease-in-out infinite;
+        color: rgb(0, 0, 0);
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 90%; /* Cambiado a 90% para ocupar casi todo el ancho */
+        margin: 0 auto; /* Centrado horizontal */
+        display: block; /* Cambiado a bloque para ocupar todo el ancho disponible */
+        text-align: center; /* Centrado del texto */
+        }
+
+       .product img {
+        width: 100%;
+        height: auto; /* Para mantener la proporción */
+        max-width: 200px; /* Limitando el tamaño máximo */
+        display: block; /* Centrado horizontal de la imagen */
+        margin: 0 auto 10px; /* Centrado vertical y separación con el siguiente elemento */
+        }
+        .product .product-info {
+            flex: 1;
+        }
+
+        .product .product-name {
+            font-size: 18px;
+        }
+        
+        h2, h3 {
+            font-size: 24px;
+            clear: all; 
+            text-align: center;
+        }
+        
+        #total-container, #pedido-container {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        #total {
+            display: inline-block; 
+            padding: 0 5px;
+        }
+        #productos-seleccionados {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        }
+
+        .producto-seleccionado {
+        margin: 5px; 
+        }
+
+        .eliminar-producto {
+        background-color: black;
+        color: rgb(255, 0, 0);
+        padding: 5px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-left: 5px; 
+        }  
+        #pedido-container {
+            display: flex;
+            justify-content: center;
+        }
+        #pedido-container button {
+            margin-right: 20px; 
+            background: linear-gradient(45deg,rgb(255, 255, 255),green,yellow,black);
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+        }
+        
+        #confirmar_pedido {
+            background: linear-gradient(45deg,rgb(255, 255, 255),green,yellow,black);
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+            color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="products">
+        <div class="product">
+            <h2>ENTRADAS</h2>
+            <button onclick="agregarProducto(15000, 'pataconas con hogo')">
+                <img src="pataconashogo.jpg" alt="Producto 1">
+                <div class="product-info">
+                    <div class="product-name">pataconas con hogo - $15000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(15000, 'moneditas')">
+                <img src="moneditas.jpg" alt="Producto 2">
+                <div class="product-info">
+                    <div class="product-name">moneditas- $15000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(15000, 'maduro con queso y bocadillo')">
+                <img src="bocadillo.jpg" alt="Producto 3">
+                <div class="product-info">
+                    <div class="product-name">maduro con queso y bocadillo - $15000</div>
+                </div>
+            </button>
+
+        </div>
+
+        <div class="product">
+            <h3>PLATOS</h3>
+            <button onclick="agregarProducto(20000, 'plataburger')">
+                <img src="hamburguesa.jpg" alt="Producto 1">
+                <div class="product-info">
+                    <div class="product-name">plataburger - $20000</div>
+                    <span>(carne de res, queso, cebolla caramelizada, tomate, lechuga, salsa)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'plataperro')">
+                <img src="plataperro.jpg" alt="Producto 2">
+                <div class="product-info">
+                    <div class="product-name">plataperro - $20000</div>
+                    <span>(base de platano, salchicha, queso, papa ripio, salsa, jamon)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'salchiplata')">
+                <img src="salchiplata.jpg" alt="Producto 3">
+                <div class="product-info">
+                    <div class="product-name">salchiplata - $20000</div>
+                    <span>(trocitos de platano, salchicha, queso fundido)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'boliplata')">
+                <img src="boliplata.jpg" alt="Producto 4">
+                <div class="product-info">
+                    <div class="product-name">boliplata - $20000</div>
+                    <span>(bolas de platano rellenas de queso y tocineta)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'pataconpizzaó')">
+                <img src="pataconpizzao.jpg" alt="Producto 5">
+                <div class="product-info">
+                    <div class="product-name">patacon pizza´o - $20000</div>
+                    <span>(base de platano, salsa de tomate, jamon, maiz tierno, piña melada, queso)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'platasandwichvegetal')">
+                <img src="sandwich.jpg" alt="Producto 6">
+                <div class="product-info">
+                    <div class="product-name">plata sandwich vegetal - $20000</div>
+                    <span>(jamon, queso, vegetales salteados)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'canastas')">
+                <img src="canastas.jpg" alt="Producto 7">
+                <div class="product-info">
+                    <div class="product-name">canastas - $20000</div>
+                    <span>(atun, cilantro, cebolla, mayonesa)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(20000, 'empaplata')">
+                <img src="empaplata.jpg" alt="Producto 8">
+                <div class="product-info">
+                    <div class="product-name">empaplata - $20000</div>
+                    <span>(empanadas rellena de carne ropavieja o pollo con champiñones)</span>
+                </div>
+            </button>
+        </div>
+
+
+        <div class="product">
+            <h2>JUGOS</h2>
+            <button onclick="agregarProducto(11000, 'banano en leche')">
+                <img src="jbanano.jpg" alt="Producto 1">
+                <div class="product-info">
+                    <div class="product-name">banano en leche - $11000</div>
+                    <span>(unico jugo a base de leche)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'limonada natural')">
+                <img src="limonatura.png" alt="Producto 2">
+                <div class="product-info">
+                    <div class="product-name">limonada natural - $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'cerezada')">
+                <img src="cereza.png" alt="Producto 3">
+                <div class="product-info">
+                    <div class="product-name">cerezada - $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'limonada de coco')">
+                <img src="coco.jpg" alt="Producto 4">
+                <div class="product-info">
+                    <div class="product-name">limonada de coco- $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'cerecoco')">
+                <img src="cerecoco.jpg" alt="Producto 5">
+                <div class="product-info">
+                    <div class="product-name">cerecoco - $10000</div>
+                    <span>(deliciosa mezcla de cereza y coco)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'cholupa')">
+                <img src="cholupa.jpg" alt="Producto 6">
+                <div class="product-info">
+                    <div class="product-name">cholupa- $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'maracuya')">
+                <img src="maracuya.png" alt="Producto 7">
+                <div class="product-info">
+                    <div class="product-name">maracuya- $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'locura')">
+                <img src="locura.jpg" alt="Producto 8">
+                <div class="product-info">
+                    <div class="product-name">locura - $10000</div>
+                    <span>(deliciosa mezcla de cholupa y maracuya)</span>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'mandarina')">
+                <img src="mandarina.jpg" alt="Producto 9">
+                <div class="product-info">
+                    <div class="product-name">mandarina - $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'naranjada')">
+                <img src="naranja.jpg" alt="Producto 10">
+                <div class="product-info">
+                    <div class="product-name">naranjada - $10000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(10000, 'manjar')">
+                <img src="manjar.jpg" alt="Producto 11">
+                <div class="product-info">
+                    <div class="product-name">manjar - $10000</div>
+                    <span>(deliciosa mezcla de mandarina y naranja)</span>
+                </div>
+        </div>
+        <div class="product">
+            <h3>GASEOSAS Y CERVEZAS</h3>
+            <button onclick="agregarProducto(5000, 'cocacola pet')">
+                <img src="coca pet.jpg" alt="Producto 1">
+                <div class="product-info">
+                    <div class="product-name">cocacola pet - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'ginger pet')">
+                <img src="ginger pet.jpg" alt="Producto 2">
+                <div class="product-info">
+                    <div class="product-name">ginger pet - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'sprite pet')">
+                <img src="sprite pet.jpeg" alt="Producto 3">
+                <div class="product-info">
+                    <div class="product-name">sprite pet- $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'Quatro pet')">
+                <img src="Quatro pet.jpg" alt="Producto 4">
+                <div class="product-info">
+                    <div class="product-name">Quatro pet- $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'cocacola 1.5')">
+                <img src="cocagrande.jpg" alt="Producto 5">
+                <div class="product-info">
+                    <div class="product-name">cocacola 1.5- $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'ginger 1.5')">
+                <img src="gingergrande.png" alt="Producto 6">
+                <div class="product-info">
+                    <div class="product-name">ginger 1.5 - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'sprite 1.5')">
+                <img src="spritegrande.png" alt="Producto 7">
+                <div class="product-info">
+                    <div class="product-name">sprite 1.5 - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'Quatro 1.5')">
+                <img src="Quatrogrande.jpg" alt="Producto 8">
+                <div class="product-info">
+                    <div class="product-name">Quatro 1.5 - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'aguila negra')">
+                <img src="aguila.jpg" alt="Producto 9">
+                <div class="product-info">
+                    <div class="product-name">aguila negra - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'aguila light')">
+                <img src="ligth.jpg" alt="Producto 10">
+                <div class="product-info">
+                    <div class="product-name">aguila light - $5000</div>
+                </div>
+            </button>
+            <button onclick="agregarProducto(5000, 'costeña')">
+                <img src="costeña.png" alt="Producto 11">
+                <div class="product-info">
+                    <div class="product-name">costeña- $5000</div>
+                </div>
+     </button>
+    </div> 
+    <div id="total-container">
+        <div id="productos-seleccionados"></div>
+        <div id="total"></div>
+    </div> 
+    
+    <div id="pedido-container"> 
+        <button onclick="window.history.back()">Volver</button>
+        <button id="confirmar_pedido" onclick="hacerPedido()" disabled>Hacer Pedido</button>
+    </div>
+    <script>
+        var totalPedido = 0;
+        var productosSeleccionados = [];
+        var precios = {
+        'pataconas con hogo': 15000,
+        'moneditas': 15000,
+        'maduro con queso y bocadillo': 15000,
+        'plataburger': 20000,
+        'plataperro': 20000,
+        'salchiplata': 20000,
+        'boliplata': 20000,
+        'patacon pizza´o': 20000,
+        'platasandwichvegetal': 20000,
+        'canastas': 20000,
+        'empaplata': 20000,
+        'banano en leche': 10000,
+        'limonada natural': 10000,
+        'cerezada': 10000,
+        'limonada de coco': 10000,
+        'cerecoco': 10000,
+        'cholupa': 10000,
+        'maracuya': 10000,
+        'locura': 10000,
+        'mandarina': 10000,
+        'naranjada': 10000,
+        'manjar': 10000,
+        'cocacola pet': 5000,
+        'ginger pet': 5000,
+        'sprite pet': 5000,
+        'Quatro pet': 5000,
+        'cocacola 1.5': 5000,
+        'ginger 1.5': 5000,
+        'sprite 1.5': 5000,
+        'Quatro 1.5': 5000,
+        'aguila negra': 5000,
+        'aguila light': 5000,
+        'costeña': 5000
+    };
+    function agregarProducto(precio, nombreProducto) {
+            var cantidad = prompt("cuantas deseas?", "1");
+            if (cantidad !== null && cantidad !== "") {
+                cantidad = parseInt(cantidad);
+                if (!isNaN(cantidad) && cantidad > 0) {
+                    totalPedido += precio * cantidad;
+                    productosSeleccionados.push(nombreProducto + " x" + cantidad);
+                    actualizarTotal();
+                    mostrarProductosSeleccionados();
+                    document.getElementById('confirmar_pedido').disabled = false;
+                } else {
+                    alert("Por favor, ingrese una cantidad válida.");
+                }
+            }
+        }
+
+        function actualizarTotal() {
+            var totalElement = document.getElementById('total');
+            totalElement.innerHTML = '<p>Total a pagar (sin domicilio incluido): $' + totalPedido + '</p>';
+        }
+
+        function hacerPedido() {
+            window.location.href = 'confirmacion_pedido.html';
+        }
+        function eliminarProducto(index) {
+        var productoEliminado = productosSeleccionados.splice(index, 1)[0];
+        var cantidad = parseInt(productoEliminado.match(/\d+/)[0]); 
+        if (!isNaN(cantidad) && cantidad > 0) {
+        totalPedido -= precios[productoEliminado.split(" x")[0]] * cantidad; 
+        actualizarTotal();
+        mostrarProductosSeleccionados();
+        }
+        }
+
+        function mostrarProductosSeleccionados() {
+        var productosSeleccionadosContainer = document.getElementById('productos-seleccionados');
+        productosSeleccionadosContainer.innerHTML = '';
+        productosSeleccionados.forEach(function(producto, index) {
+        var divProducto = document.createElement('div');
+        divProducto.classList.add('producto-seleccionado');
+        var botonEliminar = document.createElement('button');
+        botonEliminar.textContent = 'X';
+        botonEliminar.classList.add('eliminar-producto');
+        botonEliminar.onclick = function() {
+        eliminarProducto(index);
+        };
+        
+        divProducto.textContent = producto;
+        divProducto.appendChild(botonEliminar);
+        productosSeleccionadosContainer.appendChild(divProducto);
+        });
+
+        var totalElement = document.getElementById('total');
+        totalElement.innerHTML = '<p>Total a pagar (sin domicilio incluido): $' + totalPedido + '</p>';
+    
+        if (productosSeleccionados.length === 0) {
+        totalElement.innerHTML = '';
+        document.getElementById('confirmar_pedido').disabled = true;
+
+        window.location.reload();
+        } else {
+        document.getElementById('confirmar_pedido').disabled = false;
+        }
+        }
+
+    </script>
+</body>
+</html>
+
+

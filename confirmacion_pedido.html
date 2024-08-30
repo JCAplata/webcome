@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Pedido</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+        }
+        @keyframes cambiar {
+            0% {background-position: 0 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0 50%;}
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+            color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .error {
+            color: rgb(0, 0, 0);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        #qrNequi, #qrDaviplata {
+            width: 200px;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+        }
+        .file-upload {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .file-upload input {
+            display: none;
+        }
+        .file-upload label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Datos del Envío</h2>
+        <form id="pedidoForm">
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" placeholder="Dirección">
+                <div id="direccionError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="tipoVivienda">Tipo de Vivienda:</label>
+                <select id="tipoVivienda" onchange="mostrarNumeroCasa()">
+                    <option value="casa">Casa</option>
+                    <option value="conjunto">Conjunto</option>
+                </select>
+            </div>
+            <div class="form-group" id="numeroCasaDiv" style="display: none;">
+                <label for="numeroCasa">Número de casa o apartamento:</label>
+                <input type="text" id="numeroCasa" placeholder="Número de casa o apartamento">
+                <div id="numeroCasaError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" placeholder="Teléfono">
+                <div id="telefonoError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre de quien recibe:</label>
+                <input type="text" id="nombre" placeholder="Nombre de quien recibe">
+                <div id="nombreError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="metodoPago">Método de Pago:</label>
+                <select id="metodoPago" onchange="mostrarSubMetodoPago()">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="datafono">Datafono</option>
+                    <option value="pago_online">Pago Online</option>
+                </select>
+            </div>
+            <div class="form-group" id="subMetodoPagoDiv" style="display: none;">
+                <label for="subMetodoPago">Submétodo de Pago:</label>
+                <select id="subMetodoPago" onchange="mostrarSubMetodoPago()">
+                    <option value="nequi">Nequi</option>
+                    <option value="daviplata">Daviplata</option>
+                </select>
+            </div>
+            <div id="qrs" style="display: none;">
+                <img id="qrNequi" src="QRnequi.jpg" style="display: none;">
+                <img id="qrDaviplata" src="QRdos.jpg" style="display: none;">
+                <div class="file-upload">
+                    <input type="file" id="comprobantePago" accept="image/*">
+                    <label for="comprobantePago">Adjuntar Captura</label>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="button" onclick="goBack()">Atrás</button>
+                <button type="button" onclick="confirmarPedido()">Confirmar Pedido</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function mostrarNumeroCasa() {
+            var tipoVivienda = document.getElementById('tipoVivienda').value;
+            var numeroCasaDiv = document.getElementById('numeroCasaDiv');
+            if (tipoVivienda === 'conjunto') {
+                numeroCasaDiv.style.display = 'block';
+            } else {
+                numeroCasaDiv.style.display = 'none';
+            }
+        }
+
+        function mostrarSubMetodoPago() {
+            var metodoPago = document.getElementById('metodoPago').value;
+            var subMetodoPagoDiv = document.getElementById('subMetodoPagoDiv');
+            var qrs = document.getElementById('qrs');
+            var qrNequi = document.getElementById('qrNequi');
+            var qrDaviplata = document.getElementById('qrDaviplata');
+
+            if (metodoPago === 'pago_online') {
+                subMetodoPagoDiv.style.display = 'block';
+                qrs.style.display = 'block';
+                var subMetodoPago = document.getElementById('subMetodoPago').value;
+                if (subMetodoPago === 'nequi') {
+                    qrNequi.style.display = 'block';
+                    qrDaviplata.style.display = 'none';
+                } else if (subMetodoPago === 'daviplata') {
+                    qrNequi.style.display = 'none';
+                    qrDaviplata.style.display = 'block';
+                }
+            } else {
+                subMetodoPagoDiv.style.display = 'none';
+                qrs.style.display = 'none';
+                qrNequi.style.display = 'none';
+                qrDaviplata.style.display = 'none';
+            }
+        }
+
+        function confirmarPedido() {
+            var direccion = document.getElementById('direccion').value;
+            var telefono = document.getElementById('telefono').value;
+            var nombre = document.getElementById('nombre').value;
+            var telefonoPattern = /^\d{10}$/;
+            var nombrePattern = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+            var valid = true;
+
+            if (!telefonoPattern.test(telefono)) {
+                document.getElementById('telefonoError').textContent = 'Por favor ingresa un número de teléfono válido';
+                valid = false;
+            } else {
+                document.getElementById('telefonoError').textContent = '';
+            }
+
+            if (!nombrePattern.test(nombre)) {
+                document.getElementById('nombreError').textContent = 'Por favor ingresa un nombre válido.';
+                valid = false;
+            } else {
+                document.getElementById('nombreError').textContent = '';
+            }
+
+            if (direccion === '') {
+                document.getElementById('direccionError').textContent = 'Por favor ingresa la dirección.';
+                valid = false;
+            } else {
+                document.getElementById('direccionError').textContent = '';
+            }
+
+            if (document.getElementById('tipoVivienda').value === 'conjunto') {
+                var numeroCasa = document.getElementById('numeroCasa').value;
+                if (numeroCasa === '') {
+                    document.getElementById('numeroCasaError').textContent = 'Por favor ingresa el número de casa o apartamento.';
+                    valid = false;
+                } else {
+                    document.getElementById('numeroCasaError').textContent = '';
+                }
+            }
+
+            if (valid) {
+                alert('Pedido confirmado.');
+                window.location.href = 'index.html'; // Cambia 'index.html' por la URL de tu página principal
+            }
+        }
+    </script>
+</body>
+</html>
+
+

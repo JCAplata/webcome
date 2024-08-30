@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLATA o HAMBRE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Agregar la hoja de estilos de Font Awesome -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg,rgb(255, 255, 255),green,yellow,black);
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px; 
+        }
+        img {
+            width: 300px;
+            height: 300px;
+            opacity: 0; 
+            animation: aparecer 3s ease forwards; 
+        }
+        .header {
+        text-align: center;
+        position: relative;
+        }
+
+        .header img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 50%;
+        margin-top: 80px;
+        }
+
+        .social-buttons {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 10; 
+        }
+
+        .social-buttons ul {
+            display: flex;
+        }
+        .social-buttons ul li {
+            list-style: none;
+        }
+        .social-buttons ul li a {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            margin: 0 5px;
+            display: block;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #fff;
+            z-index: 1;
+            transition: .5s;
+        }
+        .social-buttons ul li a .icon {
+            position: relative;
+            color: #262626;
+            transition: .5s;
+            z-index: 3;
+        }
+        .social-buttons ul li a:hover .icon {
+            color: #fff;
+            transform: rotateY(360deg);
+        }
+        .social-buttons ul li a:before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f00;
+            transition: .5s;
+            z-index: 2;
+        }
+        .social-buttons ul li a:hover:before {
+            top: 0;
+        }
+        .social-buttons ul li:nth-child(1) a:before{
+            background: #3b5999;
+        }
+        .social-buttons ul li:nth-child(2) a:before{
+            background: #e73ed1;
+        }
+        .social-buttons ul li:nth-child(3) a:before {
+            background: #25D366; 
+        }
+        .social-buttons ul li:nth-child(4) a:before {
+            background: #000;
+        }
+        @keyframes aparecer {
+            0% {
+                opacity: 0;
+                transform: scale(0.5); 
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1); 
+            }
+        }
+        button {
+            display: block;
+            width: 300px;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: aliceblue;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(45deg,rgb(0, 0, 0),yellow,green,rgb(255, 255, 255));
+            background-size: 400% 400%;
+            position: relative;
+            animation: cambiar 10s ease-in-out infinite;
+        }
+        .menu-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        @keyframes cambiar {
+            0% {background-position: 0 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0 50%;}
+        }
+        #sugerencia-texto {
+        width: 280px; /* Ancho igual al de los botones */
+        padding: 10px;
+        margin: 10px auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none; /* Evita que el usuario redimensione el cuadro de texto */
+        }
+       .button-container {
+       display: flex;
+       justify-content: space-between;
+       width: 300px; /* Ancho igual al del cuadro de texto */
+       margin: 10px auto;
+       }
+
+       .button-container button {
+        flex: 1;
+        margin: 0 5px;
+       }
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="social-buttons">
+            <ul>
+                <li><a href="https://www.facebook.com/groups/4372030459546339?locale=es_LA"><i class="fab fa-facebook-f icon"></i></a></li>
+                <li><a href="https://www.instagram.com/djwilliampinilla_oficial/"><i class="fab fa-instagram icon"></i></a></li>
+                <li><a href="https://wa.link/qqutii"><i class="fab fa-whatsapp icon"></i></a></li>
+                <li><a href="https://www.tiktok.com/creator-center/content"><i class="fab fa-tiktok icon"></i></a></li>
+            </ul>
+        </div>
+        <img src="plata o hambre.jpg" alt="Restaurante">
+    </div>
+    <div class="container">
+        <button onclick="window.open('menu.html', '_self')">Menú</button>
+        <button onclick="window.open('reservas.html', '_self')">Reservas</button>
+        <button onclick="window.open('domicilios.html', '_self')">Domicilios</button>
+        <button onclick="window.open('lugares.html', '_self')">Donde Nos Encuentras</button>
+        <a href="javascript:void(0);" onclick="mostrarSugerencias()">Sugerencias</a>
+        <div id="sugerencias-form" style="display: none;">
+        <form id="sugerencia-formulario">
+        <textarea id="sugerencia-texto" rows="4" cols="50" placeholder="Escribe tus sugerencias aquí"></textarea><br>
+        <div class="button-container">
+        <button type="button" onclick="cerrarSugerencias()">Atrás</button>
+        <button type="button" onclick="enviarSugerencia()">Enviar</button>
+        </div>
+    </form>
+</div>
+    <script>
+        function mostrarSugerencias() {
+            var sugerenciasForm = document.getElementById('sugerencias-form');
+            sugerenciasForm.style.display = 'block';
+        }
+        function enviarSugerencia() {
+            var sugerenciaTexto = document.getElementById('sugerencia-texto').value.trim();
+            if (sugerenciaTexto === "") {
+                alert("Por favor, escribe tus sugerencias antes de enviar."); 
+                return; 
+            }
+            console.log("Sugerencia enviada:", sugerenciaTexto);
+            window.location.reload();
+        }
+        function cerrarSugerencias() {
+        var sugerenciasForm = document.getElementById('sugerencias-form');
+        sugerenciasForm.style.display = 'none';
+        }
+</script>
+</body>
+</html>
+
+

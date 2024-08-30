@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas</title>
+    <style>
+    body {
+        background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+        background-size: 400% 400%;
+        position: relative;
+        animation: cambiar 10s ease-in-out infinite;
+    }
+    @keyframes cambiar {
+        0% {background-position: 0 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0 50%;}
+    }
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #000000;
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        font-weight: bold;
+    }
+    input[type="date"],
+    input[type="text"],
+    input[type="tel"],
+    select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #000000;
+        border-radius: 5px;
+    }
+    button[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+        background-size: 400% 400%;
+        position: relative;
+        animation: cambiar 10s ease-in-out infinite;
+        color: rgb(0, 0, 0);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .error {
+        color: rgb(0, 0, 0);
+        font-size: 0.9em;
+        margin-top: 10px;
+    }
+    #qrNequi, #qrDaviplata {
+        width: 200px;
+        height: auto;
+        display: block;
+        margin: 10px auto;
+    }
+    .file-upload {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .file-upload input {
+        display: none;
+    }
+    .file-upload label {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(45deg, rgb(255, 255, 255), green, yellow, black);
+        background-size: 400% 400%;
+        position: relative;
+        animation: cambiar 10s ease-in-out infinite;
+        color: rgb(0, 0, 0);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Realizar Reserva</h2>
+        <form id="reservationForm">
+            <div class="form-group">
+                <label for="fecha">Fecha de Reserva:</label>
+                <input type="date" id="fecha" name="fecha" required>
+                <div id="fechaError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="hora">Hora de Reserva:</label>
+                <input type="text" id="hora" name="hora" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$" required>
+                <div id="horaError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="personas">Número de Personas:</label>
+                <input type="text" id="personas" name="personas" pattern="[0-9]*" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre de Quien Reserva:</label>
+                <input type="text" id="nombre" name="nombre" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono de Quien Reserva:</label>
+                <input type="tel" id="telefono" name="telefono" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="motivo">Motivo de Celebración:</label>
+                <select id="motivo" name="motivo">
+                    <option value="cumpleaños">Cumpleaños</option>
+                    <option value="aniversario">Aniversario</option>
+                    <option value="viaje">Viaje</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="decoracion">¿Desea Decoración?</label>
+                <select id="decoracion" name="decoracion">
+                    <option value="no">No</option>
+                    <option value="si">Si</option>
+                </select>
+            </div>
+            <div class="form-group" id="generoField" style="display: none;">
+                <label for="genero">Género:</label>
+                <select id="genero" name="genero">
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <p>Necesitaremos que hagas el favor de dejar un abono de 10.000 pesos:</p>
+                <select id="metodoAbono" name="metodoAbono" onchange="mostrarQR()">
+                    <option value="">Seleccione un método</option>
+                    <option value="nequi">Nequi</option>
+                    <option value="daviplata">Daviplata</option>
+                </select>
+                <div id="qrs" style="display: none;">
+                    <img id="qrNequi" src="QRnequi.jpg" alt="QR Nequi">
+                    <img id="qrDaviplata" src="QRdos.jpg" alt="QR Daviplata">
+                    <div class="file-upload">
+                        <input type="file" id="comprobantePago" accept="image/*" required>
+                        <label for="comprobantePago">Adjuntar Captura</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Confirmar Reserva</button>
+            <button type="button" onclick="goBack()">Volver</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const fechaInput = document.getElementById('fecha');
+            const horaInput = document.getElementById('hora');
+            const decoracionField = document.getElementById('decoracion');
+            const generoField = document.getElementById('generoField');
+            const fechaError = document.getElementById('fechaError');
+            const horaError = document.getElementById('horaError');
+            const metodoAbonoSelect = document.getElementById('metodoAbono');
+            const qrNequi = document.getElementById('qrNequi');
+            const qrDaviplata = document.getElementById('qrDaviplata');
+            const qrsDiv = document.getElementById('qrs');
+            const comprobanteInput = document.getElementById('comprobantePago');
+
+            fechaInput.addEventListener('input', validateFecha);
+            horaInput.addEventListener('input', validateHora);
+            
+            decoracionField.addEventListener('change', function() {
+                if (decoracionField.value === 'si') {
+                    generoField.style.display = 'block';
+                } else {
+                    generoField.style.display = 'none';
+                }
+            });
+
+            metodoAbonoSelect.addEventListener('change', mostrarQR);
+
+            const form = document.getElementById('reservationForm');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                if (!validateFecha() || !validateHora() || !validateComprobante()) {
+                    return;
+                }
+
+                alert('Reservación exitosa');
+                window.location.href = 'index.html';
+            });
+
+            function validateFecha() {
+                const fecha = fechaInput.value;
+                const today = new Date().toISOString().split('T')[0];
+                if (fecha < today) {
+                    fechaError.textContent = 'La fecha seleccionada ya ha pasado. Por favor, elija otra fecha.';
+                    return false;
+                } else {
+                    fechaError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validateHora() {
+                const hora = horaInput.value;
+                const horaRegex = /^([0]?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/;
+                if (!horaRegex.test(hora)) {
+                    horaError.textContent = 'Formato de hora inválido. Por favor, ingrese la hora en formato 12 horas (ej. 4:00 PM).';
+                    return false;
+                }
+
+                const hora24 = convertTo24HourFormat(hora);
+                if (hora24 < '16:00' || hora24 > '22:00') {
+                    horaError.textContent = 'Apreciado cliente, a esa hora no estamos de servicio.';
+                    return false;
+                } else {
+                    horaError.textContent = '';
+                    return true;
+                }
+            }
+
+            function convertTo24HourFormat(time) {
+                const [timePart, period] = time.split(/\s/);
+                let [hours, minutes] = timePart.split(':').map(Number);
+                if (period === 'PM' || period === 'pm') {
+                    if (hours !== 12) hours += 12;
+                } else if (period === 'AM' || period === 'am') {
+                    if (hours === 12) hours = 0;
+                }
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            }
+
+            function mostrarQR() {
+                const metodo = metodoAbonoSelect.value;
+                if (metodo === 'nequi') {
+                    qrNequi.style.display = 'block';
+                    qrDaviplata.style.display = 'none';
+                } else if (metodo === 'daviplata') {
+                    qrNequi.style.display = 'none';
+                    qrDaviplata.style.display = 'block';
+                } else {
+                    qrNequi.style.display = 'none';
+                    qrDaviplata.style.display = 'none';
+                }
+                qrsDiv.style.display = metodo ? 'block' : 'none';
+            }
+
+            function validateComprobante() {
+                if (comprobanteInput.files.length === 0) {
+                    alert('Por favor adjunte el comprobante de pago.');
+                    return false;
+                }
+                return true;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
